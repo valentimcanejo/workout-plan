@@ -65,6 +65,7 @@ export default function Home() {
       {treinos?.map((treino) => (
         <CardTreino
           key={treino.id}
+          treinoId={treino.id}
           nome={treino?.nome!}
           observacao={treino?.observacao!}
         />
