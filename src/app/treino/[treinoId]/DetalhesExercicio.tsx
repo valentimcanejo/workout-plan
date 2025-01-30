@@ -4,6 +4,7 @@ import { useState } from "react";
 import CardExercicio from "../../../components/ui/CardExercicio";
 import { Exercicio } from "../../../models/supabase/exercicio";
 import PlayerVideo from "../../../components/ui/PlayerVideo";
+import { Button } from "../../../components/ui/Button";
 
 const exercicios: Exercicio[] = [
   {
@@ -98,14 +99,17 @@ export default function DetalhesExercicio() {
   const exercicioAtual = exercicios?.find(
     (exercicio) => exercicio.id === detalhesExercicio
   );
+  console.log(detalhesExercicio);
 
   return detalhesExercicio ? (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full max-w-sm gap-4 px-2">
       <PlayerVideo video="https://www.youtube.com/watch?v=DPNZ-KQjAoY" />
-      <button onClick={() => setDetalhesExercicio("")}></button>
+      <Button onClick={() => setDetalhesExercicio("")}>
+        Voltar para os exercícios
+      </Button>
     </div>
   ) : (
-    <div className="flex flex-col gap-4 w-full">
+    <div className="flex flex-col gap-4 w-full max-w-sm">
       {exercicios?.map((exercicio) => (
         <CardExercicio
           exercicioId={exercicio.id}
