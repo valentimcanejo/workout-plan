@@ -1,17 +1,8 @@
-import {
-  CirclePlus,
-  Plus,
-  SkipBackIcon,
-  StepBackIcon,
-  Undo,
-  Undo2,
-} from "lucide-react";
-import CardExercicio from "../../../components/ui/CardExercicio";
-import { Exercicio } from "../../../models/supabase/exercicio";
+import { Undo2 } from "lucide-react";
 import Link from "next/link";
 import DetalhesExercicio from "./DetalhesExercicio";
-import { Button } from "../../../components/ui/Button";
 import { ModalCadastrarExercicio } from "./ModalCadastrarExercicio";
+import { buscarExerciciosPorTreino } from "../../../backend/supabase/tables/exercicios";
 
 export default async function Treino({
   params,
@@ -19,6 +10,7 @@ export default async function Treino({
   params: Promise<{ treinoId: string }>;
 }) {
   const treinoId = (await params).treinoId;
+  const exercicios = await buscarExerciciosPorTreino({ treinoId });
 
   return (
     <div className="flex flex-col justify-center items-center mx-auto w-full h-full gap-2">
@@ -27,9 +19,9 @@ export default async function Treino({
           <Undo2 />
         </Link>
         <h1>Exercícios</h1>
-        <ModalCadastrarExercicio />
+        <ModalCadastrarExercicio treinoId={treinoId} />
       </div>
-      <DetalhesExercicio />
+      <DetalhesExercicio exercicios={exercicios!} />
     </div>
   );
 }

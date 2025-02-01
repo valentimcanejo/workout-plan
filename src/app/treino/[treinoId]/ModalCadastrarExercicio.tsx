@@ -14,15 +14,17 @@ import {
 import { Input } from "../../../components/ui/input";
 import { Label } from "../../../components/ui/label";
 import { FormularioExercicio } from "./FormularioExercicio";
+import { cadastrarExercicio } from "../../../backend/supabase/tables/exercicios";
 
-export function ModalCadastrarExercicio() {
-  const criarTarefa = async (data: {
+export function ModalCadastrarExercicio({ treinoId }: { treinoId: string }) {
+  const criarExercicio = async (data: {
     nome: string;
     observacao: string;
     video: string;
-    gif: string;
+    imagem: string;
+    treino_id: string;
   }) => {
-    const { nome, observacao, video, gif } = data;
+    await cadastrarExercicio(data);
   };
 
   return (
@@ -34,7 +36,7 @@ export function ModalCadastrarExercicio() {
         <DialogHeader>
           <DialogTitle>Adicionar Exercício</DialogTitle>
         </DialogHeader>
-        <FormularioExercicio onSubmit={criarTarefa} />
+        <FormularioExercicio onSubmit={criarExercicio} treino_id={treinoId} />
       </DialogContent>
     </Dialog>
   );

@@ -6,24 +6,35 @@ import { Input } from "../../../components/ui/input";
 import { Label } from "../../../components/ui/label";
 
 interface FormularioExercicioProps {
+  treino_id: string;
   onSubmit: (data: {
     nome: string;
     observacao: string;
     video: string;
-    gif: string;
+    imagem: string;
+    treino_id: string;
   }) => void;
 }
 
-export function FormularioExercicio({ onSubmit }: FormularioExercicioProps) {
+export function FormularioExercicio({
+  treino_id,
+  onSubmit,
+}: FormularioExercicioProps) {
   const [nome, setNome] = useState("");
   const [observacao, setObservacao] = useState("");
   const [video, setVideo] = useState("");
-  const [gif, setGif] = useState("");
+  const [imagem, setImagem] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    onSubmit({ nome, observacao, video, gif });
+    onSubmit({ nome, observacao, video, imagem, treino_id });
+
+    setNome("");
+    setObservacao("");
+    setVideo("");
+    setImagem("");
+    window.location.reload();
   };
 
   return (
@@ -32,6 +43,7 @@ export function FormularioExercicio({ onSubmit }: FormularioExercicioProps) {
         <Label htmlFor="nome">Nome</Label>
         <Input
           type="text"
+          required
           placeholder="Digite o nome..."
           id="nome"
           value={nome}
@@ -43,6 +55,7 @@ export function FormularioExercicio({ onSubmit }: FormularioExercicioProps) {
         <Label htmlFor="observacao">Observação</Label>
         <Input
           type="text"
+          required
           placeholder="Digite a observação..."
           id="observacao"
           value={observacao}
@@ -54,6 +67,7 @@ export function FormularioExercicio({ onSubmit }: FormularioExercicioProps) {
         <Label htmlFor="video">Link do vídeo</Label>
         <Input
           type="text"
+          required
           placeholder="Digite o link do vídeo..."
           id="video"
           value={video}
@@ -65,10 +79,11 @@ export function FormularioExercicio({ onSubmit }: FormularioExercicioProps) {
         <Label htmlFor="gif">Link do gif</Label>
         <Input
           type="text"
+          required
           placeholder="Digite o link do gif..."
-          id="gif"
-          value={gif}
-          onChange={(e) => setGif(e.target.value)}
+          id="imagem"
+          value={imagem}
+          onChange={(e) => setImagem(e.target.value)}
           className="col-span-3"
         />
       </div>
