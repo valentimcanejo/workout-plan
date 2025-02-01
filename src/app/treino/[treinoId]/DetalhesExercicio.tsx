@@ -18,7 +18,7 @@ export default function DetalhesExercicio({
 
   return detalhesExercicio ? (
     <div className="flex flex-col w-full max-w-sm gap-4 px-2">
-      <PlayerVideo video={exercicioAtual?.video!} />
+      <PlayerVideo video={exercicioAtual?.video || ""} />
       <Button onClick={() => setDetalhesExercicio("")}>
         Voltar para os exercícios
       </Button>
@@ -29,9 +29,9 @@ export default function DetalhesExercicio({
         <CardExercicio
           exercicioId={exercicio.id}
           key={exercicio.id}
-          nome={exercicio.nome!}
-          observacao={exercicio.observacao!}
-          imagem={exercicio.imagem!}
+          nome={exercicio.nome || ""}
+          observacao={exercicio.observacao || ""}
+          imagem={exercicio.imagem || ""}
           setDetalhesExercicio={setDetalhesExercicio}
         />
       ))}

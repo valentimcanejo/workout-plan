@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 interface CardTreinoProps {
-  treinoId: string;
-  nome: string;
-  observacao: string;
+  treinoId: string | null;
+  nome: string | null;
+  observacao: string | null;
 }
 
 export default function CardTreino({

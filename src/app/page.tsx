@@ -1,6 +1,4 @@
-import Image from "next/image";
 import CardTreino from "../components/ui/CardTreino";
-import { Treino } from "../models/supabase/treino";
 import { buscarTodosTreinos } from "../backend/supabase/tables/treinos";
 
 export default async function Home() {
@@ -12,8 +10,8 @@ export default async function Home() {
         <CardTreino
           key={treino.id}
           treinoId={treino.id}
-          nome={treino?.nome!}
-          observacao={treino?.observacao!}
+          nome={treino?.nome}
+          observacao={treino?.observacao}
         />
       ))}
     </div>
