@@ -18,7 +18,7 @@ export default function CardExercicio({
 }: CardExercicioProps) {
   return (
     <button
-      className="border shadow-xl text-lg w-full flex p-4 rounded-xl text-center"
+      className="border shadow-xl text-lg w-full flex p-4 rounded-xl text-left"
       onClick={() => setDetalhesExercicio(exercicioId)}
     >
       <Image alt="exercicio" src={imagem} width={80} height={80} />

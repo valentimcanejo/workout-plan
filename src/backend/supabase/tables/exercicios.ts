@@ -22,7 +22,7 @@ export const buscarExerciciosPorTreino = async ({
     `
       )
       .eq("treino_id", treinoId)
-      .order("indice", { ascending: true });
+      .order("criado_em", { ascending: true });
     const { data, error } = exerciciosQuery;
 
     if (error) {
@@ -44,6 +44,25 @@ export const cadastrarExercicio = async (data: {
 }) => {
   try {
     await supabase.from("exercicios").insert(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const atualizarExercicio = async ({
+  exercicioId,
+  chave,
+  valor,
+}: {
+  exercicioId: string;
+  chave: string;
+  valor: string | number;
+}) => {
+  try {
+    await supabase
+      .from("exercicios")
+      .update({ [chave]: valor })
+      .eq("id", exercicioId);
   } catch (error) {
     console.log(error);
   }
