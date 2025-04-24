@@ -24,7 +24,6 @@ export default function DetalhesExercicio({
       <Textarea
         defaultValue={exercicioAtual?.observacao || ""}
         onBlur={async (e) => {
-          console.log(e.target.value);
           await atualizarExercicio({
             exercicioId: exercicioAtual?.id || "",
             chave: "observacao",
