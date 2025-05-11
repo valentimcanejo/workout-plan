@@ -1,0 +1,28 @@
+"use client";
+
+import { useState } from "react";
+import { atualizarExercicio } from "../../../../../backend/supabase/tables/exercicios";
+import PlayerVideo from "../../../../../components/ui/PlayerVideo";
+import { Textarea } from "../../../../../components/ui/textarea";
+import { Treino } from "../../../../../models/supabase/treino";
+
+export default function ExercicioForm({ exercicio }: { exercicio: any }) {
+  const [observacao, setObservacao] = useState(exercicio?.observacao || "");
+
+  return (
+    <>
+      <h1 className="text-lg font-bold">{exercicio?.nome}</h1>
+      <Textarea
+        defaultValue={observacao}
+        onBlur={async (e) => {
+          await atualizarExercicio({
+            exercicioId: exercicio?.id || "",
+            chave: "observacao",
+            valor: e.target.value,
+          });
+        }}
+      />
+      <PlayerVideo video={exercicio?.video || ""} />
+    </>
+  );
+}

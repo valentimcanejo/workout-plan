@@ -1,41 +1,59 @@
 import Image from "next/image";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, forwardRef, SetStateAction } from "react";
 import { Skeleton } from "./skeleton";
 
 interface CardExercicioProps {
   exercicioId: string;
   nome: string;
+  index: number;
   observacao: string;
   imagem: string;
-  setDetalhesExercicio: Dispatch<SetStateAction<string>>;
+  verDetalhesExercicio?: any;
+  moveUp?: any;
+  moveDown?: any;
 }
 
-export default function CardExercicio({
-  exercicioId = "",
-  nome = "",
-  observacao = "",
-  imagem = "",
-  setDetalhesExercicio = () => {},
-}: CardExercicioProps) {
-  return (
-    <button
-      className="border shadow-xl text-lg w-full flex p-4 rounded-xl text-left"
-      onClick={() => setDetalhesExercicio(exercicioId)}
-    >
-      <Image
-        alt="exercicio"
-        src={imagem}
-        loading="lazy"
-        width={80}
-        height={80}
-      />
-      <div className="flex flex-col">
-        <h1>{nome}</h1>
-        <p className="text-sm text-gray-500">{observacao}</p>
+const CardExercicio = forwardRef<HTMLDivElement, CardExercicioProps>(
+  (
+    {
+      exercicioId = "",
+      nome = "",
+      index = 0,
+      observacao = "",
+      imagem = "",
+      verDetalhesExercicio = () => {},
+      moveUp = () => {},
+      moveDown = () => {},
+      ...rest
+    },
+    ref
+  ) => {
+    return (
+      <div
+        {...rest}
+        ref={ref}
+        className="border shadow-xl text-lg w-full flex p-4 rounded-xl text-left cursor-pointer"
+        onClick={verDetalhesExercicio}
+      >
+        <Image
+          alt="exercicio"
+          src={imagem}
+          loading="lazy"
+          width={80}
+          height={80}
+        />
+        <div className="flex flex-col ml-4">
+          <h1>{nome}</h1>
+          <p className="text-sm text-gray-500">{observacao}</p>
+        </div>
+        {/* <div className="flex flex-col ml-auto">
+          <button onClick={() => moveUp({ index, exercicioId })}>{"<"}</button>
+          <button onClick={moveDown}>{">"}</button>
+        </div> */}
       </div>
-    </button>
-  );
-}
+    );
+  }
+);
 
 export const CardExercicioSkeleton = () => {
   return (
@@ -52,3 +70,5 @@ export const CardExercicioSkeleton = () => {
     </div>
   );
 };
+
+export default CardExercicio;

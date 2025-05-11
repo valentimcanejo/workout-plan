@@ -12,7 +12,7 @@ export default async function Treino({
 
   return (
     <div className="flex flex-col justify-center items-center mx-auto w-full h-full gap-2">
-      <CabecalhoExercicios treinoId={treinoId} />
+      <CabecalhoExercicios treinoId={treinoId} rotaAnterior={`/`} />
       <DetalhesExercicio exercicios={exercicios!} />
     </div>
   );
