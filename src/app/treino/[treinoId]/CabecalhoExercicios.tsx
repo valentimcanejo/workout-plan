@@ -1,7 +1,6 @@
 "use client";
 
 import { Undo2 } from "lucide-react";
-import Link from "next/link";
 import { ModalCadastrarExercicio } from "./ModalCadastrarExercicio";
 import { Skeleton } from "../../../components/ui/skeleton";
 import { useRouter } from "next/navigation";

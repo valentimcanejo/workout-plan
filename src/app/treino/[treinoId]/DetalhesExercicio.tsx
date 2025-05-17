@@ -3,12 +3,6 @@
 import { useState } from "react";
 import CardExercicio from "../../../components/ui/CardExercicio";
 import { Exercicio } from "../../../models/supabase/exercicio";
-import PlayerVideo from "../../../components/ui/PlayerVideo";
-import { Button } from "../../../components/ui/Button";
-import { Textarea } from "../../../components/ui/textarea";
-import { atualizarExercicio } from "../../../backend/supabase/tables/exercicios";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function DetalhesExercicio({
@@ -16,13 +10,10 @@ export default function DetalhesExercicio({
 }: {
   exercicios: Exercicio[];
 }) {
-  const [detalhesExercicio, setDetalhesExercicio] = useState("");
-  const exercicioAtual = exercicios?.find(
-    (exercicio) => exercicio.id === detalhesExercicio
-  );
   const [exerciciosOrdenados, setExerciciosOrdenados] = useState(exercicios);
-  const [isDropped, setIsDropped] = useState(false);
+
   const router = useRouter();
+  console.log(exerciciosOrdenados);
 
   const moveUp = ({
     index,

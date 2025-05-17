@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Dispatch, forwardRef, SetStateAction } from "react";
+import { forwardRef } from "react";
 import { Skeleton } from "./skeleton";
 
 interface CardExercicioProps {
@@ -8,9 +8,9 @@ interface CardExercicioProps {
   index: number;
   observacao: string;
   imagem: string;
-  verDetalhesExercicio?: any;
-  moveUp?: any;
-  moveDown?: any;
+  verDetalhesExercicio?: () => void;
+  moveUp?: (index: { index: number; exercicioId: string }) => void;
+  moveDown?: (index: number) => void;
 }
 
 const CardExercicio = forwardRef<HTMLDivElement, CardExercicioProps>(
@@ -46,10 +46,10 @@ const CardExercicio = forwardRef<HTMLDivElement, CardExercicioProps>(
           <h1>{nome}</h1>
           <p className="text-sm text-gray-500">{observacao}</p>
         </div>
-        {/* <div className="flex flex-col ml-auto">
+        <div className="flex flex-col ml-auto">
           <button onClick={() => moveUp({ index, exercicioId })}>{"<"}</button>
-          <button onClick={moveDown}>{">"}</button>
-        </div> */}
+          <button onClick={() => moveDown(index)}>{">"}</button>
+        </div>
       </div>
     );
   }
@@ -70,5 +70,7 @@ export const CardExercicioSkeleton = () => {
     </div>
   );
 };
+
+CardExercicio.displayName = "CardExercicio";
 
 export default CardExercicio;
