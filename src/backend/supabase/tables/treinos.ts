@@ -15,7 +15,7 @@ export const buscarTodosTreinos = async () => {
     `
       )
       .order("indice", { ascending: true });
-    const { data, error, status, statusText, count } = treinosQuery;
+    const { data,  } = treinosQuery;
 
     return data;
   } catch (error) {

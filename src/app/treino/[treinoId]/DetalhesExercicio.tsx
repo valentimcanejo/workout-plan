@@ -11,13 +11,10 @@ export default function DetalhesExercicio({
 }: {
   exercicios: Exercicio[];
 }) {
-  const [detalhesExercicio, setDetalhesExercicio] = useState("");
-  const exercicioAtual = exercicios?.find(
-    (exercicio) => exercicio.id === detalhesExercicio
-  );
   const [exerciciosOrdenados, setExerciciosOrdenados] = useState(exercicios);
-  const [isDropped, setIsDropped] = useState(false);
+
   const router = useRouter();
+  console.log(exerciciosOrdenados);
 
   const moveUp = async ({ index }: { index: number }) => {
     if (index <= 0) return;

@@ -1,13 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { Exercicio } from "@/models/supabase/exercicio";
 import { atualizarExercicio } from "../../../../../backend/supabase/tables/exercicios";
 import PlayerVideo from "../../../../../components/ui/PlayerVideo";
 import { Textarea } from "../../../../../components/ui/textarea";
-import { Treino } from "../../../../../models/supabase/treino";
 
-export default function ExercicioForm({ exercicio }: { exercicio: any }) {
-  const [observacao, setObservacao] = useState(exercicio?.observacao || "");
+export default function ExercicioForm({ exercicio }: { exercicio: Exercicio }) {
+  const observacao = exercicio?.observacao || "";
 
   return (
     <>
