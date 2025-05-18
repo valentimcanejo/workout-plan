@@ -14,6 +14,7 @@ export default function ExercicioForm({ exercicio }: { exercicio: any }) {
       <h1 className="text-lg font-bold">{exercicio?.nome}</h1>
       <Textarea
         defaultValue={observacao}
+        className="h-32"
         onBlur={async (e) => {
           await atualizarExercicio({
             exercicioId: exercicio?.id || "",

@@ -3,13 +3,8 @@
 import { useState } from "react";
 import CardExercicio from "../../../components/ui/CardExercicio";
 import { Exercicio } from "../../../models/supabase/exercicio";
-import PlayerVideo from "../../../components/ui/PlayerVideo";
-import { Button } from "../../../components/ui/Button";
-import { Textarea } from "../../../components/ui/textarea";
-import { atualizarExercicio } from "../../../backend/supabase/tables/exercicios";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { atualizarExercicio } from "../../../backend/supabase/tables/exercicios";
 
 export default function DetalhesExercicio({
   exercicios,
@@ -24,28 +19,63 @@ export default function DetalhesExercicio({
   const [isDropped, setIsDropped] = useState(false);
   const router = useRouter();
 
-  const moveUp = ({
-    index,
-    exercicioId,
-  }: {
-    index: number;
-    exercicioId: string;
-  }) => {
-    console.log(index, exercicioId);
+  const moveUp = async ({ index }: { index: number }) => {
+    if (index <= 0) return;
 
-    const newExercicios = [...exercicios];
-    const [removed] = newExercicios.splice(index, 1);
-    newExercicios.splice(index - 1, 0, removed);
+    const newExercicios = [...exerciciosOrdenados];
+
+    // troca local
+    const currentItem = newExercicios[index];
+    const itemAbove = newExercicios[index - 1];
+
+    newExercicios[index] = itemAbove;
+    newExercicios[index - 1] = currentItem;
+
+    // atualiza índices no banco
+    await Promise.all([
+      atualizarExercicio({
+        exercicioId: currentItem.id,
+        chave: "indice",
+        valor: index - 1,
+      }),
+      atualizarExercicio({
+        exercicioId: itemAbove.id,
+        chave: "indice",
+        valor: index,
+      }),
+    ]);
+
     setExerciciosOrdenados(newExercicios);
   };
 
-  const moveDown = (index: number) => {
-    const newExercicios = [...exercicios];
-    const [removed] = newExercicios.splice(index, 1);
-    newExercicios.splice(index + 1, 0, removed);
+  const moveDown = async ({ index }: { index: number }) => {
+    if (index >= exerciciosOrdenados.length - 1) return;
+
+    const newExercicios = [...exerciciosOrdenados];
+
+    // troca local
+    const currentItem = newExercicios[index];
+    const itemBelow = newExercicios[index + 1];
+
+    newExercicios[index] = itemBelow;
+    newExercicios[index + 1] = currentItem;
+
+    // atualiza índices no banco
+    await Promise.all([
+      atualizarExercicio({
+        exercicioId: currentItem.id,
+        chave: "indice",
+        valor: index + 1,
+      }),
+      atualizarExercicio({
+        exercicioId: itemBelow.id,
+        chave: "indice",
+        valor: index,
+      }),
+    ]);
+
     setExerciciosOrdenados(newExercicios);
   };
-
   const verDetalhesExercicio = ({
     exercicioId,
     treinoId,
@@ -58,10 +88,11 @@ export default function DetalhesExercicio({
 
   return (
     <div className="flex flex-col gap-4 w-full max-w-sm">
-      {exercicios?.map((exercicio) => (
+      {exerciciosOrdenados?.map((exercicio, index) => (
         <CardExercicio
           exercicioId={exercicio.id}
-          index={exercicios.indexOf(exercicio)}
+          index={index}
+          indexExercicio={exercicio?.indice!}
           key={exercicio.id}
           nome={exercicio.nome || ""}
           observacao={exercicio.observacao || ""}
